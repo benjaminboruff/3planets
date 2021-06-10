@@ -3,7 +3,7 @@
 return [
     'production' => false,
     'baseUrl' => '',
-    'title' => 'Jigsaw',
-    'description' => 'Website description.',
+    'title' => '3D Planets',
+    'description' => 'Sun and planets in 3D.',
     'collections' => [],
 ];
