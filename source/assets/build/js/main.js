@@ -21,31 +21,68 @@ function main() {
   var camera = new three__WEBPACK_IMPORTED_MODULE_0__.PerspectiveCamera(fov, aspect, near, far);
   var renderer = new three__WEBPACK_IMPORTED_MODULE_0__.WebGL1Renderer();
   renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement); // an array of objects whose rotation to update
+  document.body.appendChild(renderer.domElement); // camera settings
+
+  camera.position.set(0, 50, 0);
+  camera.up.set(0, 0, 1);
+  camera.lookAt(0, 0, 0); // an array of objects whose rotation is to be updated
 
   var objects = []; // use one sphere for everything
 
   var radius = 1;
   var widthSegments = 6;
   var heightSegments = 6;
-  var sphereGeometry = new three__WEBPACK_IMPORTED_MODULE_0__.SphereGeometry(radius, widthSegments, heightSegments);
+  var sphereGeometry = new three__WEBPACK_IMPORTED_MODULE_0__.SphereGeometry(radius, widthSegments, heightSegments); //
+  // make solar system
+
+  var solarSystem = new three__WEBPACK_IMPORTED_MODULE_0__.Object3D();
+  scene.add(solarSystem);
+  objects.push(solarSystem); // make sun
+
   var sunMaterial = new three__WEBPACK_IMPORTED_MODULE_0__.MeshPhongMaterial({
     emissive: 0xffff00
   });
   var sunMesh = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(sphereGeometry, sunMaterial);
   sunMesh.scale.set(5, 5, 5); // make sun large
 
-  scene.add(sunMesh);
+  solarSystem.add(sunMesh);
   objects.push(sunMesh);
   {
     var color = 0xffffff;
     var intensity = 3;
     var light = new three__WEBPACK_IMPORTED_MODULE_0__.PointLight(color, intensity);
     scene.add(light);
-  }
-  camera.position.set(0, 50, 0);
-  camera.up.set(0, 0, 1);
-  camera.lookAt(0, 0, 0);
+  } //
+  // make earth orbit
+
+  var earthOrbit = new three__WEBPACK_IMPORTED_MODULE_0__.Object3D();
+  earthOrbit.position.x = 10;
+  solarSystem.add(earthOrbit);
+  objects.push(earthOrbit); //
+  // make earth
+
+  var earthMaterial = new three__WEBPACK_IMPORTED_MODULE_0__.MeshPhongMaterial({
+    color: 0x2233ff,
+    emissive: 0x112244
+  });
+  var earthMesh = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(sphereGeometry, earthMaterial);
+  earthOrbit.add(earthMesh);
+  objects.push(earthMesh); //
+  // make moon orbit
+
+  var moonOrbit = new three__WEBPACK_IMPORTED_MODULE_0__.Object3D();
+  moonOrbit.position.x = 2;
+  earthOrbit.add(moonOrbit); //
+  // make moon
+
+  var moonMaterial = new three__WEBPACK_IMPORTED_MODULE_0__.MeshPhongMaterial({
+    color: 0x888888,
+    emissive: 0x222222
+  });
+  var moonMesh = new three__WEBPACK_IMPORTED_MODULE_0__.Mesh(sphereGeometry, moonMaterial);
+  moonMesh.scale.set(0.5, 0.5, 0.5);
+  moonOrbit.add(moonMesh);
+  objects.push(moonMesh); //
 
   function resizeRendererToDisplaySize(renderer) {
     var body = renderer.domElement;

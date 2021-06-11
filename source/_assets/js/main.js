@@ -12,7 +12,12 @@ function main() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  // an array of objects whose rotation to update
+  // camera settings
+  camera.position.set(0, 50, 0);
+  camera.up.set(0, 0, 1);
+  camera.lookAt(0, 0, 0);
+
+  // an array of objects whose rotation is to be updated
   const objects = [];
 
   // use one sphere for everything
@@ -24,7 +29,14 @@ function main() {
     widthSegments,
     heightSegments
   );
+  //
 
+  // make solar system
+  const solarSystem = new THREE.Object3D();
+  scene.add(solarSystem);
+  objects.push(solarSystem);
+
+  // make sun
   const sunMaterial = new THREE.MeshPhongMaterial({
     emissive: 0xffff00,
   });
@@ -33,7 +45,7 @@ function main() {
 
   sunMesh.scale.set(5, 5, 5); // make sun large
 
-  scene.add(sunMesh);
+  solarSystem.add(sunMesh);
   objects.push(sunMesh);
 
   {
@@ -42,10 +54,41 @@ function main() {
     const light = new THREE.PointLight(color, intensity);
     scene.add(light);
   }
+  //
 
-  camera.position.set(0, 50, 0);
-  camera.up.set(0, 0, 1);
-  camera.lookAt(0, 0, 0);
+  // make earth orbit
+  const earthOrbit = new THREE.Object3D();
+  earthOrbit.position.x = 10;
+  solarSystem.add(earthOrbit);
+  objects.push(earthOrbit);
+  //
+
+  // make earth
+  const earthMaterial = new THREE.MeshPhongMaterial({
+    color: 0x2233ff,
+    emissive: 0x112244,
+  });
+  const earthMesh = new THREE.Mesh(sphereGeometry, earthMaterial);
+  earthOrbit.add(earthMesh);
+  objects.push(earthMesh);
+  //
+
+  // make moon orbit
+  const moonOrbit = new THREE.Object3D();
+  moonOrbit.position.x = 2;
+  earthOrbit.add(moonOrbit);
+  //
+
+  // make moon
+  const moonMaterial = new THREE.MeshPhongMaterial({
+    color: 0x888888,
+    emissive: 0x222222,
+  });
+  const moonMesh = new THREE.Mesh(sphereGeometry, moonMaterial);
+  moonMesh.scale.set(0.5, 0.5, 0.5);
+  moonOrbit.add(moonMesh);
+  objects.push(moonMesh);
+  //
 
   function resizeRendererToDisplaySize(renderer) {
     const body = renderer.domElement;
