@@ -16,6 +16,7 @@ function main() {
   camera.position.set(0, 50, 0);
   camera.up.set(0, 0, 1);
   camera.lookAt(0, 0, 0);
+  //
 
   // an array of objects whose rotation is to be updated
   const objects = [];
@@ -35,6 +36,7 @@ function main() {
   const solarSystem = new THREE.Object3D();
   scene.add(solarSystem);
   objects.push(solarSystem);
+  //
 
   // make sun
   const sunMaterial = new THREE.MeshPhongMaterial({
@@ -47,7 +49,9 @@ function main() {
 
   solarSystem.add(sunMesh);
   objects.push(sunMesh);
+  //
 
+  // add light source
   {
     const color = 0xffffff;
     const intensity = 3;
