@@ -5,7 +5,7 @@ mix.disableSuccessNotifications();
 mix.setPublicPath('source/assets/build');
 
 mix.jigsaw()
-    .js('source/_assets/js/main.js', 'js')
+    .ts('source/_assets/ts/main.ts', 'ts')
     .css('source/_assets/css/main.css', 'css', [
         require('postcss-import'),
         require('tailwindcss'),
