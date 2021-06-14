@@ -100,6 +100,10 @@ function main() {
   // visibility for dat.GUI boolean checkboxes
   class AxisGridHelper {
 
+    axes : any;
+    grid : any;
+    _visible: boolean;
+
     constructor(node, units = 10) {
       const axes = new THREE.AxesHelper();
       axes.material.depthTest = false;
@@ -128,7 +132,7 @@ function main() {
   }
   //
 
-  function makeAxisGrid(node, label, units) {
+  function makeAxisGrid(node, label, units?) {
     const helper = new AxisGridHelper(node, units);
     gui.add(helper, "visible").name(label);
   }
