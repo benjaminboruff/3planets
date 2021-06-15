@@ -100,18 +100,18 @@ function main() {
   // visibility for dat.GUI boolean checkboxes
   class AxisGridHelper {
 
-    axes : any;
-    grid : any;
+    axes : THREE.AxesHelper;
+    grid : THREE.GridHelper;
     _visible: boolean;
 
     constructor(node, units = 10) {
-      const axes = new THREE.AxesHelper();
-      axes.material.depthTest = false;
+      const axes  = new THREE.AxesHelper();
+      (axes.material as THREE.Material).depthTest = false;
       axes.renderOrder = 2; // after grid
       node.add(axes);
 
       const grid = new THREE.GridHelper(units, units);
-      grid.material.depthTest = false;
+      (grid.material as THREE.Material).depthTest = false;
       grid.renderOrder = 1;
       node.add(grid);
 
